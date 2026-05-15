@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import joblib
 import os
+import hashlib
 
 # ============================================
 # PAGE CONFIG
@@ -17,6 +18,8 @@ st.write("App running ✅")
 
 import sklearn
 st.write("sklearn version:", sklearn.__version__)
+with open("model/final_pipeline.pkl", "rb") as f:
+    st.write("MODEL HASH:", hashlib.md5(f.read()).hexdigest())
 
 # ============================================
 # LOAD MODEL
