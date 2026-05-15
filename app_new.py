@@ -15,6 +15,9 @@ st.set_page_config(
 st.title(" Insurance Premium Predictor")
 st.write("App running ✅")
 
+import sklearn
+st.write("sklearn version:", sklearn.__version__)
+
 # ============================================
 # LOAD MODEL
 # ============================================
