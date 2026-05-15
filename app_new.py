@@ -58,6 +58,7 @@ policy_date = st.date_input("Policy Start Date")
 policy_year = policy_date.year
 policy_month = policy_date.month
 
+
 # ============================================
 # PREDICTION
 # ============================================
@@ -65,7 +66,9 @@ if st.button("🚀 Predict Premium"):
 
     try:
 
-        # CREATE DATAFRAME
+        # ==========================
+        # 1. CREATE DATA FIRST
+        # ==========================
         data = pd.DataFrame({
             "Age": [age],
             "Gender": [gender],
@@ -87,33 +90,41 @@ if st.button("🚀 Predict Premium"):
             "policy_year": [policy_year],
             "policy_month": [policy_month]
         })
+
+        # ==========================
+        # 2. TYPE FIX
+        # ==========================
         data = data.astype({
-        "Age": float,
-        "Annual Income": float,
-        "Number of Dependents": float,
-        "Health Score": float,
-        "Previous Claims": float,
-        "Vehicle Age": float,
-        "Credit Score": float,
-        "Insurance Duration": float,
-        "policy_year": float,
-        "policy_month": float
+            "Age": float,
+            "Annual Income": float,
+            "Number of Dependents": float,
+            "Health Score": float,
+            "Previous Claims": float,
+            "Vehicle Age": float,
+            "Credit Score": float,
+            "Insurance Duration": float,
+            "policy_year": float,
+            "policy_month": float
         })
 
-         
+        # ==========================
+        # 3. DEBUG (NOW SAFE)
+        # ==========================
+        st.write("MODEL TYPE:", type(pipeline))
+        st.write("FEATURE COUNT:", len(pipeline.feature_names_in_))
+        st.write("INPUT SHAPE:", data.shape)
 
-        # ========================================
-        # PREDICT
-        # ========================================
-        prediction = pipeline.predict(data)
-        prediction = float(prediction[0])
+        transformed = pipeline.named_steps['preprocessor'].transform(data)
+        st.write("TRANSFORMED SHAPE:", transformed.shape)
+        st.write("TRANSFORMED SAMPLE:", transformed[0][:10])
 
-        st.success("Prediction generated successfully 🎯")
+        # ==========================
+        # 4. PREDICT
+        # ==========================
+        prediction = pipeline.predict(data)[0]
 
-        st.metric(
-            label="💰 Estimated Premium",
-            value=f"₹ {prediction:,.2f}"
-        )
+        st.success("Prediction generated")
+        st.metric("Estimated Premium", f"₹ {prediction:,.2f}")
 
     except Exception as e:
         st.error(f"Error: {e}")
