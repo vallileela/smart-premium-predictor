@@ -15,6 +15,7 @@ st.set_page_config(
 )
 
 st.title(" Insurance Premium Predictor")
+st.write("App reached UI ✅")
 st.write("Model is loading... please wait ⏳")
 
 # ============================================
@@ -42,7 +43,7 @@ def load_model():
     return joblib.load(path)
 
 pipeline = load_model()
-st.write("Model loaded:", pipeline)
+
 
 
 
