@@ -5,9 +5,9 @@ import joblib
 import os
 import hashlib
 
-# ============================================
+
 # PAGE CONFIG
-# ============================================
+
 st.set_page_config(
     page_title="Insurance Premium Predictor",
     layout="centered"
@@ -16,14 +16,8 @@ st.set_page_config(
 st.title(" Insurance Premium Predictor")
 st.write("App running ✅")
 
-import sklearn
-st.write("sklearn version:", sklearn.__version__)
-with open("model/final_pipeline.pkl", "rb") as f:
-    st.write("MODEL HASH:", hashlib.md5(f.read()).hexdigest())
-
-# ============================================
 # LOAD MODEL
-# ============================================
+
 @st.cache_resource
 def load_model():
     path = os.path.join(os.path.dirname(__file__), "model", "final_pipeline.pkl")
@@ -33,9 +27,9 @@ pipeline = load_model()
 
 st.success("Model loaded successfully ✅")
 
-# ============================================
+
 # USER INPUTS
-# ============================================
+
 age = st.number_input("Age", 18, 100, 30)
 gender = st.selectbox("Gender", ["Male", "Female"])
 income = st.number_input("Annual Income", 10000, 1000000, 50000)
@@ -59,16 +53,13 @@ policy_year = policy_date.year
 policy_month = policy_date.month
 
 
-# ============================================
+
 # PREDICTION
 # ============================================
 if st.button("🚀 Predict Premium"):
 
     try:
 
-        # ==========================
-        # 1. CREATE DATA FIRST
-        # ==========================
         data = pd.DataFrame({
             "Age": [age],
             "Gender": [gender],
@@ -91,36 +82,10 @@ if st.button("🚀 Predict Premium"):
             "policy_month": [policy_month]
         })
 
-        # ==========================
-        # 2. TYPE FIX
-        # ==========================
-        data = data.astype({
-            "Age": float,
-            "Annual Income": float,
-            "Number of Dependents": float,
-            "Health Score": float,
-            "Previous Claims": float,
-            "Vehicle Age": float,
-            "Credit Score": float,
-            "Insurance Duration": float,
-            "policy_year": float,
-            "policy_month": float
-        })
-
-        # ==========================
-        # 3. DEBUG (NOW SAFE)
-        # ==========================
-        st.write("MODEL TYPE:", type(pipeline))
-        st.write("FEATURE COUNT:", len(pipeline.feature_names_in_))
-        st.write("INPUT SHAPE:", data.shape)
-
-        transformed = pipeline.named_steps['preprocessor'].transform(data)
-        st.write("TRANSFORMED SHAPE:", transformed.shape)
-        st.write("TRANSFORMED SAMPLE:", transformed[0][:10])
-
-        # ==========================
-        # 4. PREDICT
-        # ==========================
+        
+        
+       
+        #PREDICT
         prediction = pipeline.predict(data)[0]
 
         st.success("Prediction generated")
