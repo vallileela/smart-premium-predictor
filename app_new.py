@@ -147,6 +147,11 @@ if st.button("🚀 Predict Premium"):
             "policy_year": [policy_year],
             "policy_month": [policy_month]
         })
+        st.write("INPUT DATAFRAME:")
+        st.dataframe(data)
+
+        st.write("MODEL EXPECTED FEATURES:")
+        st.write(pipeline.feature_names_in_)
 
         # Prediction
         prediction = pipeline.predict(data)
