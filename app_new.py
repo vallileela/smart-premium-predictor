@@ -85,9 +85,7 @@ if st.button("🚀 Predict Premium"):
             "policy_month": [policy_month]
         })
 
-         # ================= DEBUG HERE =================
-        st.write("MODEL TYPE:", type(pipeline))
-        st.write("SAMPLE PRED:", pipeline.predict(data))
+         
 
         # ========================================
         # PREDICT
