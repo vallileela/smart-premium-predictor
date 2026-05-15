@@ -87,6 +87,18 @@ if st.button("🚀 Predict Premium"):
             "policy_year": [policy_year],
             "policy_month": [policy_month]
         })
+        data = data.astype({
+        "Age": float,
+        "Annual Income": float,
+        "Number of Dependents": float,
+        "Health Score": float,
+        "Previous Claims": float,
+        "Vehicle Age": float,
+        "Credit Score": float,
+        "Insurance Duration": float,
+        "policy_year": float,
+        "policy_month": float
+        })
 
          
 
