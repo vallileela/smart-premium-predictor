@@ -14,7 +14,7 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("💼 Insurance Premium Predictor")
+st.title(" Insurance Premium Predictor")
 st.write("Model is loading... please wait ⏳")
 
 # ============================================
@@ -32,11 +32,22 @@ MODEL_PATH = os.path.join(
 @st.cache_resource
 def load_model():
     import joblib
-    return joblib.load(MODEL_PATH)
+    import os
+
+    path = os.path.join(os.path.dirname(__file__), "model", "final_pipeline.pkl")
+
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Model not found at: {path}")
+
+    return joblib.load(path)
 
 pipeline = load_model()
+st.write("Model loaded:", pipeline)
+
+
 
 st.success("✅ Model loaded successfully!")
+
 
 # ============================================
 # 📝 USER INPUTS
