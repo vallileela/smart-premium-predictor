@@ -4,6 +4,7 @@
 
 import streamlit as st
 import os
+import hashlib
 
 # ============================================
 # ⚙️ PAGE CONFIG
@@ -36,6 +37,9 @@ def load_model():
     import os
 
     path = os.path.join(os.path.dirname(__file__), "model", "final_pipeline.pkl")
+
+    with open(MODEL_PATH, "rb") as f:
+        st.write("Model hash:", hashlib.md5(f.read()).hexdigest())
 
     if not os.path.exists(path):
         raise FileNotFoundError(f"Model not found at: {path}")
