@@ -82,42 +82,9 @@ if st.button("🚀 Predict Premium"):
             "policy_month": [policy_month]
         })
 
-        # ========================================
-        # FIX 1: FORCE DATA TYPES
-        # ========================================
-        data = data.astype({
-            "Age": float,
-            "Annual Income": float,
-            "Number of Dependents": float,
-            "Health Score": float,
-            "Previous Claims": float,
-            "Vehicle Age": float,
-            "Credit Score": float,
-            "Insurance Duration": float,
-            "policy_year": float,
-            "policy_month": float
-        })
-
-        # ========================================
-        # FIX 2: STRIP STRINGS (CLEAN CATEGORICALS)
-        # ========================================
-        for col in data.select_dtypes(include="object"):
-            data[col] = data[col].str.strip()
-
-        # ========================================
-        # DEBUG (KEEP TEMPORARILY)
-        # ========================================
-        st.write("INPUT DATAFRAME:")
-        st.dataframe(data)
-
-        st.write("MODEL EXPECTED FEATURES:")
-        st.write(pipeline.feature_names_in_)
-
-        st.write("DATA TYPES:")
-        st.write(data.dtypes)
-
-        st.write("RAW INPUT ROW:")
-        st.write(data.iloc[0])
+         # ================= DEBUG HERE =================
+        st.write("MODEL TYPE:", type(pipeline))
+        st.write("SAMPLE PRED:", pipeline.predict(data))
 
         # ========================================
         # PREDICT
